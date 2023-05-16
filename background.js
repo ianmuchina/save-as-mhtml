@@ -1,17 +1,18 @@
-import { verifyPermission } from './lib.js';
 import * as idb from './idb-keyval.js'
+import { verifyPermission, writeFile } from './lib.js';
 
+// Set Badge on install
 chrome.runtime.onInstalled.addListener(async () => {
     const handle = await idb.get("directory")
     const ok = await verifyPermission(handle);
     chrome.action.setBadgeText({
         text: ok ? 'on' : 'off',
     });
+    chrome.action.setBadgeBackgroundColor({color: ok ? 'green' : 'red',})
 });
 
-const extensions = 'https://developer.chrome.com/docs/extensions'
-const webstore = 'https://developer.chrome.com/docs/webstore'
-
+// TODO: Bookmark Handler
+// Click Handler
 chrome.action.onClicked.addListener(async (tab) => {
     console.log("clicked")
     // Load file handles
@@ -19,6 +20,7 @@ chrome.action.onClicked.addListener(async (tab) => {
     const ok = (await handle.queryPermission({mode: 'readwrite'})) === 'granted'
     // console.log(handle)
     chrome.action.setBadgeText({ text: ok ? 'on' : 'off' });
+    chrome.action.setBadgeBackgroundColor({color: ok ? 'green' : 'red',})
     // Save mhtml
     let x = ''
     
@@ -38,14 +40,18 @@ chrome.action.onClicked.addListener(async (tab) => {
     }
 });
 
+// Update extension badge and indicate permissions status
 chrome.runtime.onMessage.addListener((e) => {
     let ok = e.message == 'permissions-ok'
     console.log(ok, e)
     chrome.action.setBadgeText({
         text: ok ? 'on' : 'off',
     });
+    chrome.action.setBadgeBackgroundColor({color: ok ? 'green' : 'red',})
 })
 
+
+// Save tab dom tree to file
 async function save(tab, dirHandle, path) {
     let fileHandle
     try {
@@ -66,11 +72,3 @@ async function save(tab, dirHandle, path) {
     }
 }
 
-async function writeFile(fileHandle, contents) {
-    // Create a FileSystemWritableFileStream to write to.
-    const writable = await fileHandle.createWritable();
-    // Write the contents of the file to the stream.
-    await writable.write(contents);
-    // Close the file and write the contents to disk.
-    await writable.close();
-}
