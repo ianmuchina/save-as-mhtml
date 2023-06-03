@@ -1,11 +1,8 @@
 {
-    "$schema": "https://json.schemastore.org/chrome-manifest",
     "manifest_version": 3,
     "name": "mfuko",
-    "key": "mfuko",
-    "version": "1.0",
     "description": "Test",
-    "options_page": "dist/options.html",
+    "options_page": "src/options.html",
     "background": {
         "service_worker": "dist/background.js",
         "type": "module"
@@ -15,5 +12,14 @@
         "pageCapture",
         "scripting"
     ],
-    "action": 
+    "action": {},
+    "version": "1.0",
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+B",
+                "mac": "Command+B"
+            }
+        }
+    }
 }

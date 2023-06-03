@@ -2,8 +2,11 @@
 
 Simple chrome extension to save page as .mhtml in one click.
 
-Not compatible with ublock origin cosmetic filters.
-Does not work with js-heavy sites.
+## Bugs
+
+- Only works on latest chrome
+- Not compatible with ublock origin cosmetic filters. ie: cookie consents in saved output.
+- Has visual bugs if js-heavy sites
 
 ## usage
 - go to options and click button to allow permissions.

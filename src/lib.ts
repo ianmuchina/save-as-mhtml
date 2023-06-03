@@ -1,5 +1,9 @@
-export async function verifyPermission(fileHandle, readWrite) {
-    const options = { mode: 'readwrite' };
+export async function verifyPermission(fileHandle: FileSystemHandle| undefined): Promise<boolean> {
+    if (fileHandle == undefined){
+        console.error("fixme")
+        return false
+    }
+    const options: FileSystemHandlePermissionDescriptor = { mode: 'readwrite' };
     // Check if permission was already granted. If so, return true.
     if ((await fileHandle.queryPermission(options)) === 'granted') {
         return true;
@@ -12,16 +16,12 @@ export async function verifyPermission(fileHandle, readWrite) {
     return false;
 }
 
-export async function writeFile(fileHandle, contents) {
+// Helper function to write a file
+export async function writeFile(fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType) {
     // Create a FileSystemWritableFileStream to write to.
     const writable = await fileHandle.createWritable();
     // Write the contents of the file to the stream.
     await writable.write(contents);
     // Close the file and write the contents to disk.
     await writable.close();
-}
-
-
-export async function init(){
-    
 }

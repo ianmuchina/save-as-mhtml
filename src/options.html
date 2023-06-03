@@ -6,23 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>mfuko</title>
   <meta charset="UTF-8">
-  <!--link rel="stylesheet" href="/new.min.css"-->
-  <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
 </head>
 
 <body>
   <header>
     <h1>MHTML Archive</h1>
     <p> ⚠️ Note
-      Keep this page open to allow the extension access to the filesystem, untill <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=1011533">Chrome allows it</a>
+      Keep this page open to allow the extension access to the filesystem, untill <a target="_blank"
+        rel="noopener noreferrer" href="https://bugs.chromium.org/p/chromium/issues/detail?id=1011533">Chrome allows
+        it</a>
     </p>
 
   </header>
-  <pre id="pre2">Status: Permission not granted</pre>
-  <pre id="pre3">Status: Permission not granted</pre>
-  <button id="btn1">Select Folder</button>
-  <button id="btn2">Grant Permission</button>
+  <pre id="msg"></pre>
+  <button id="btn1">Select New Folder</button>
+  <button id="btn2" disabled>Select <span id="dirName"></span> Previous Folder</button>
   <br>
   <h3>Settings</h3>
   <form action="">
@@ -31,6 +30,7 @@
       <label for="">Automatically open Settings page</label>
     </div>
   </form>
-  <script type="module" src="options.js"></script>
 </body>
+<script async type="module" src="/dist/options.js"></script>
+
 </html>

@@ -1,18 +1,22 @@
 {
   "name": "mhtml-archive",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node scripts/watch.mjs",
+    "build": "node scripts/build.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chrome": "^0.0.237"
+    "@types/chrome": "^0.0.237",
+    "@types/wicg-file-system-access": "^2020.9.6",
+    "esbuild": "0.17.19"
   },
   "dependencies": {
-    "esbuild": "0.17.19"
+    "idb-keyval": "^6.2.1"
   }
 }

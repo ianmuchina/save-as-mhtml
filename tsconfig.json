@@ -1,7 +1,15 @@
 {
-    "compilerOptions": {},
+    "compilerOptions": {
+        "module": "es2022",
+        "noImplicitAny": true,
+        "target": "ES2020",
+        "moduleResolution": "bundler",
+        "lib": [
+            "dom",
+            "ES2022",
+        ]
+    },
     "include": [
-        "src/*.js",
-        "src/background.ts"
+        "src/*",
     ]
 }

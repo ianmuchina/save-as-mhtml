@@ -1,5 +1,6 @@
-import * as idb from './idb-keyval.js'
-import { verifyPermission, writeFile } from './lib.js';
+import * as idb from 'idb-keyval'
+
+import { verifyPermission, writeFile } from './lib';
 
 // Set Badge on install
 chrome.runtime.onInstalled.addListener(async () => {
@@ -7,12 +8,18 @@ chrome.runtime.onInstalled.addListener(async () => {
     chrome.action.setBadgeBackgroundColor({ color: 'red' })
 });
 
-// TODO: Bookmark Handler
+// TODO: Bookmarks page Handler
 // Click Handler
 chrome.action.onClicked.addListener(async (tab) => {
     console.log("clicked")
     // Load file handles
     const handle = await idb.get("directory")
+    // Uninitialized handle
+    if (handle == undefined) {
+        // Open options page
+        console.log("uninitialized")
+        return
+    }
     const ok = (await handle.queryPermission({ mode: 'readwrite' })) === 'granted'
     // console.log(handle)
     chrome.action.setBadgeText({ text: ok ? 'on' : 'off' });
@@ -48,18 +55,18 @@ chrome.runtime.onMessage.addListener((e) => {
 
 
 // Save tab dom tree to file
-async function save(tab, dirHandle, path) {
-    let fileHandle
+async function save(tab: chrome.tabs.Tab, dirHandle: FileSystemDirectoryHandle, path: string) {
+    let fileHandle: FileSystemFileHandle
     try {
         fileHandle = await dirHandle.getFileHandle(path, { create: true });
     } catch (err) {
         console.log(err)
         return
     }
-    let ok = verifyPermission(fileHandle)
-    if (ok) {
-        console.log("mhtml permissions ok")
-        chrome.pageCapture.saveAsMHTML({ tabId: tab.id }, async (data) => {
+        
+    // Save file
+    if (verifyPermission(fileHandle)) {
+        chrome.pageCapture.saveAsMHTML({ tabId: tab.id }, async (data: Blob) => {
             await writeFile(fileHandle, data)
         })
         console.log("saved")
