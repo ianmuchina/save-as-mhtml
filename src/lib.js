@@ -1,6 +1,5 @@
 export async function verifyPermission(fileHandle, readWrite) {
-    const options = {};
-    options.mode = 'readwrite';
+    const options = { mode: 'readwrite' };
     // Check if permission was already granted. If so, return true.
     if ((await fileHandle.queryPermission(options)) === 'granted') {
         return true;
@@ -10,7 +9,6 @@ export async function verifyPermission(fileHandle, readWrite) {
     if ((await fileHandle.requestPermission(options)) === 'granted') {
         return true;
     }
-    // The user didn't grant permission, so return false.
     return false;
 }
 
@@ -21,4 +19,9 @@ export async function writeFile(fileHandle, contents) {
     await writable.write(contents);
     // Close the file and write the contents to disk.
     await writable.close();
+}
+
+
+export async function init(){
+    
 }

@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {},
+    "include": [
+        "src/*.js",
+        "src/background.ts"
+    ]
+}
